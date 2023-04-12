@@ -5,6 +5,8 @@ import css from '../../styles/Foods.module.css';
 import LeftArrow from '../../assets/arrowLeft.png'
 import RightArrow from '../../assets/arrowRight.png'
 import { useState } from "react";
+import { useStore } from "../../store/store";
+import toast, {Toaster} from 'react-hot-toast'
 export default function Foods( {foods} ) {
        const src = urlFor(foods.image).url() 
 
@@ -19,6 +21,15 @@ export default function Foods( {foods} ) {
               ? null 
               : setQuantity( (prev) => prev - 1);
        };
+
+       // add to cart function
+
+       const addFoods = useStore((state)=>state.addFoods)
+       const addToCart = ()=> {
+              addFoods({...foods, price: foods.price[Size], quantity: Quantity, size: Size});
+        toast.success("Added to Cart")
+       }
+
        return (
               <Layout>
                      
@@ -58,10 +69,11 @@ export default function Foods( {foods} ) {
                                    </div>
 
                                    {/* button */}
-                                   <div className={`btn ${css.btn}`}>
+                                   <div className={`btn ${css.btn}`}  onClick={addToCart}>
                                           Add to Cart
                                    </div>
                             </div>
+                            <Toaster/>
                      </div>
               </Layout>
        );

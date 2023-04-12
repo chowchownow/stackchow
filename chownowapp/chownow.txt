@@ -1,0 +1,1 @@
+npx sanity dev - To run the sanity studio from the terminal (on localhost:3333)
